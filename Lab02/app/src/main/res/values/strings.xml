@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="app_name">GeoQuiz</string>
+    <string name="true_button">Yep</string>
+    <string name="false_button">Nope</string>
+    <string name="next_button">Next</string>
+    <string name="right_answer_toast">Correct!</string>
+    <string name="wrong_answer_toast">Sorry, no.</string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="show_answer_button">Show Answer</string>
+    <string name="cheat_button">Cheat!</string>
+    <string name="judgment_toast">Cheating is wrong.</string>
+    <string name="question_1">Baton Rouge is the capital of Louisiana.</string>
+    <string name="question_2">Eighty percent of the world\'s population lives in the Southern hemisphere.</string>
+    <string name="question_3">Deserts are defined by average temperature.</string>
+    <string name="question_4">The old name for Scotland is Caledonia.</string>
+    <string name="question_5">Korea is part of French Indochina.</string>
+
+</resources>
