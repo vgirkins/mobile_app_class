@@ -30,12 +30,14 @@
 
         <Button
             android:id="@+id/crime_date"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="0.75"
             android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/crime_solved"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
             android:layout_height="wrap_content"
             android:text="@string/crime_solved_label" />
     </LinearLayout>
