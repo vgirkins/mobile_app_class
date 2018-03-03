@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Hangman</string>
+    <string name="play_button_text">Play!</string>
+    <string name="options_button_text">Options</string>
+    <string name="num_guesses_hint">Number of guesses</string>
+    <string name="set_guesses_button_text">Set guesses</string>
+    <string name="quit_button_text">Quit</string>
+    <string name="hard_option_text">Hard</string>
+    <string name="easy_option_text">Easy</string>
+    <string name="difficulty_label">Word difficulty</string>
+    <string name="clear_score_button_text">Clear score</string>
+    <string name="score">Score: %1$d</string>
+    <string name="guesses_left">Wrong guesses left: %1$d</string>
+    <string name="guess_field_hint">Guess</string>
+    <string name="submit_button_text">Submit guess</string>
+    <string name="back_button_text">Go back</string>
+    <string name="new_game_button_text">New game</string>
+    <string name="display_word">%1$s</string>
+</resources>
