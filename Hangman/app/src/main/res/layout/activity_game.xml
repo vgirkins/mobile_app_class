@@ -47,7 +47,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/guess_field"
+            android:id="@+id/enter_guess_field"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,7 +74,7 @@
             android:text="@string/back_button_text" />
 
         <Button
-            android:id="@+id/new_button"
+            android:id="@+id/new_game_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".5"

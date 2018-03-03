@@ -1,8 +1,12 @@
+// Created by: Victoria Girkins
+// Sources: https://stackoverflow.com/questions/17719634/how-to-exit-an-android-app-using-code#17720065
+
 package com.csci448.vgirkins.hangman;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +17,6 @@ public class WelcomeFragment extends Fragment {
     private Button mOptionsButton;
     private Button mQuitButton;
 
-
-    public interface willIEvenNeedThis {
-
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -33,7 +33,7 @@ public class WelcomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.activity_welcome, container, false);
+        View view = inflater.inflate(R.layout.fragment_welcome, container, false);
 
         mPlayButton = view.findViewById(R.id.play_button);
         mPlayButton.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,8 @@ public class WelcomeFragment extends Fragment {
         mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO close the app
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
             }
         });
         return view;

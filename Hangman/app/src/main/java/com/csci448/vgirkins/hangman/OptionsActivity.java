@@ -1,11 +1,12 @@
 package com.csci448.vgirkins.hangman;
 
-import android.app.Fragment;
+
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by Tori on 3/3/2018.
  */
 
-public class OptionsActivity {
-    private Fragment OptionsFragment;
+public class OptionsActivity extends AppCompatActivity {
+    private OptionsFragment optionsFragment;
 }

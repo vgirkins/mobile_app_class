@@ -9,20 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
- * Created by Tori on 3/2/2018.
+ * Created by Tori on 3/3/2018.
  */
 
-public class OptionsFragment extends Fragment {
-    private EditText mNumGuessesField;
-    private Button mSetGuessesButton;
-    private CheckBox mHardCheckbox;
-    private CheckBox mEasyCheckbox;
-    private Button mClearScoreButton;
+public class GameFragment extends Fragment {
+    private TextView mScoreDisplay;
+    private TextView mGuessesLeft;
+    private TextView mDisplayWord;
+    private EditText mEnterGuess;
+    private Button mSubmitGuessButton;
+    private Button mBackButton;
+    private Button mNewGameButton;
+
 
     @Override
     public void onAttach(Context context) {
@@ -39,10 +41,14 @@ public class OptionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.activity_options, container, false);
+        View view = inflater.inflate(R.layout.activity_game, container, false);
 
-        mNumGuessesField = view.findViewById(R.id.num_guesses_field);
-        mNumGuessesField.addTextChangedListener(new TextWatcher() {
+        mScoreDisplay = view.findViewById(R.id.score_display_field);
+        mGuessesLeft = view.findViewById(R.id.guesses_left_field);
+        mDisplayWord = view.findViewById(R.id.display_word_field);
+
+        mEnterGuess = view.findViewById(R.id.enter_guess_field);
+        mEnterGuess.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // TODO
@@ -59,32 +65,24 @@ public class OptionsFragment extends Fragment {
             }
         });
 
-        mSetGuessesButton = view.findViewById(R.id.set_guesses_button);
-        mSetGuessesButton.setOnClickListener(new View.OnClickListener() {
+        mSubmitGuessButton = view.findViewById(R.id.submit_button);
+        mSubmitGuessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO
             }
         });
 
-        mHardCheckbox = view.findViewById(R.id.hard_checkbox);
-        mHardCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mBackButton = view.findViewById(R.id.back_button);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                // TODO
+            public void onClick(View view) {
+                //  TODO
             }
         });
 
-        mEasyCheckbox = view.findViewById(R.id.easy_checkbox);
-        mEasyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                // TODO
-            }
-        });
-
-        mClearScoreButton = view.findViewById(R.id.clear_score_button);
-        mClearScoreButton.setOnClickListener(new View.OnClickListener() {
+        mNewGameButton = view.findViewById(R.id.new_game_button);
+        mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO
