@@ -24,7 +24,7 @@ public class HangmanGame {
         gameIsOver = false;
     }
 
-    public String userDisplayWord() {
+    public String getWordToDisplay() {
         String printThis = "";
         for (int i = 0; i < userWord.length(); i++) {
             printThis += userWord.charAt(i)+ " ";

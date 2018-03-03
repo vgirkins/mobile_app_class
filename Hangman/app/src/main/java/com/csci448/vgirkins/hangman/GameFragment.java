@@ -25,7 +25,6 @@ public class GameFragment extends Fragment {
     private Button mBackButton;
     private Button mNewGameButton;
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

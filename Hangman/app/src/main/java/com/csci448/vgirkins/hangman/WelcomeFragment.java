@@ -5,6 +5,7 @@ package com.csci448.vgirkins.hangman;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ public class WelcomeFragment extends Fragment {
     private Button mPlayButton;
     private Button mOptionsButton;
     private Button mQuitButton;
-
+    private static final int REQUEST_CODE_SCORE = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -40,6 +41,8 @@ public class WelcomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO start the game activity
+                /*Intent intent = GameActivity.newIntent(getActivity());
+                startActivityForResult(intent, REQUEST_CODE_SCORE);*/
             }
         });
 
