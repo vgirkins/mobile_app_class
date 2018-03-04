@@ -14,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class WelcomeFragment extends Fragment {
+
+    private int userScore;
+    private int computerScore;
+    private int numGuesses;
+    private boolean gameOnHard;
+
     private Button mPlayButton;
     private Button mOptionsButton;
     private Button mQuitButton;
@@ -28,6 +34,10 @@ public class WelcomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        userScore = 0;
+        computerScore = 0;
+        numGuesses = 10;
+        gameOnHard = false;
     }
 
     @Override
@@ -40,8 +50,8 @@ public class WelcomeFragment extends Fragment {
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO start the game activity
                 Intent intent = GameActivity.newIntent(getActivity());
+                // TODO put extras
                 startActivityForResult(intent, REQUEST_CODE_SCORE);
             }
         });
@@ -50,8 +60,7 @@ public class WelcomeFragment extends Fragment {
         mOptionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO start the options activity
-                Intent intent = OptionsActivity.newIntent(getActivity());
+                Intent intent = OptionsActivity.newIntent(getActivity(), userScore, computerScore, numGuesses, gameOnHard);
                 startActivityForResult(intent, REQUEST_CODE_SCORE);
             }
         });

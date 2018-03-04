@@ -5,9 +5,7 @@
     <string name="num_guesses_hint">Number of guesses</string>
     <string name="set_guesses_button_text">Set guesses</string>
     <string name="quit_button_text">Quit</string>
-    <string name="hard_option_text">Hard</string>
-    <string name="easy_option_text">Easy</string>
-    <string name="difficulty_label">Word difficulty</string>
+    <string name="difficulty_label">Game on hard</string>
     <string name="clear_score_button_text">Clear score</string>
     <string name="score">Score: %1$d</string>
     <string name="guesses_left">Wrong guesses left: %1$d</string>

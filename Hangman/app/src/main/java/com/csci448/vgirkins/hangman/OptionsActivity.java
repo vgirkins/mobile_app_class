@@ -13,7 +13,10 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class OptionsActivity extends AppCompatActivity {
-    // private static final String MY_EXTRA = "com.csci448.vgirkins.hangman.myExtra";
+    private static final String EXTRA_USER_SCORE = "com.csci448.vgirkins.hangman.user_score";
+    private static final String EXTRA_COMPUTER_SCORE = "com.csci448.vgirkins.hangman.computer_score";
+    private static final String EXTRA_NUM_GUESSES = "com.csci448.vgirkins.hangman.num_guesses";
+    private static final String EXTRA_GAME_ON_HARD = "com.csci448.vgirkins.hangman.game_on_hard";
 
     protected OptionsFragment createFragment() {
         return new OptionsFragment();
@@ -35,9 +38,12 @@ public class OptionsActivity extends AppCompatActivity {
 
     }
 
-    public static Intent newIntent(Context packageContext) {
+    public static Intent newIntent(Context packageContext, int userScore, int computerScore, int numGuesses, boolean isOnHard) {
         Intent intent = new Intent(packageContext, OptionsActivity.class);
-        // put extras
+        intent.putExtra(EXTRA_USER_SCORE, userScore);
+        intent.putExtra(EXTRA_COMPUTER_SCORE, computerScore);
+        intent.putExtra(EXTRA_NUM_GUESSES, numGuesses);
+        intent.putExtra(EXTRA_GAME_ON_HARD, isOnHard);
         return intent;
     }
 }

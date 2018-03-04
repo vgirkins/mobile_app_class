@@ -21,7 +21,6 @@ public class OptionsFragment extends Fragment {
     private EditText mNumGuessesField;
     private Button mSetGuessesButton;
     private CheckBox mHardCheckbox;
-    private CheckBox mEasyCheckbox;
     private Button mClearScoreButton;
 
     @Override
@@ -60,12 +59,6 @@ public class OptionsFragment extends Fragment {
         });
 
         mSetGuessesButton = view.findViewById(R.id.set_guesses_button);
-        mSetGuessesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO
-            }
-        });
 
         mHardCheckbox = view.findViewById(R.id.hard_checkbox);
         mHardCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -75,10 +68,9 @@ public class OptionsFragment extends Fragment {
             }
         });
 
-        mEasyCheckbox = view.findViewById(R.id.easy_checkbox);
-        mEasyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mSetGuessesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            public void onClick(View view) {
                 // TODO
             }
         });
