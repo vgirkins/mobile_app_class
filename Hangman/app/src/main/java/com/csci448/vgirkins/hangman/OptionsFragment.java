@@ -3,6 +3,7 @@
 
 package com.csci448.vgirkins.hangman;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,28 +32,48 @@ public class OptionsFragment extends Fragment {
     private static final String EXTRA_NUM_GUESSES = "com.csci448.vgirkins.hangman.num_guesses";
     private static final String EXTRA_GAME_ON_HARD = "com.csci448.vgirkins.hangman.game_on_hard";
 
-    private EditText mNumGuessesField;
-    private Button mSetGuessesButton;
-    private CheckBox mHardCheckbox;
-    private TextView mScoreDisplay;
-    private Button mClearScoreButton;
-    private Intent data;
-
     private int mUserScore;
     private  int mComputerScore;
     private int mNumGuesses;
     private boolean mGameOnHard;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    private EditText mNumGuessesField;
+    private Button mSetGuessesButton;
+    private CheckBox mHardCheckbox;
+    private TextView mScoreDisplay;
+    private Button mClearScoreButton;
+
+
+    public static OptionsFragment newInstance(int userScore, int computerScore, int numGuesses, boolean gameOnHard) {
+        Log.d("icecream", "OptionsFragment.newInstance()");
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_USER_SCORE, userScore);
+        args.putInt(EXTRA_COMPUTER_SCORE, computerScore);
+        args.putInt(EXTRA_NUM_GUESSES, numGuesses);
+        args.putBoolean(EXTRA_GAME_ON_HARD, gameOnHard);
+
+        OptionsFragment frag = new OptionsFragment();
+        frag.setArguments(args);
+        return frag;
+    }
+
+    public void setReturnResult() {
+        Intent resultIntent = new Intent();
+
+        resultIntent.putExtra(EXTRA_USER_SCORE, mUserScore);
+        resultIntent.putExtra(EXTRA_COMPUTER_SCORE, mComputerScore);
+        resultIntent.putExtra(EXTRA_NUM_GUESSES, mNumGuesses);
+        resultIntent.putExtra(EXTRA_GAME_ON_HARD, mGameOnHard);
+
+        getActivity().setResult(Activity.RESULT_OK, resultIntent);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("icecream", "OptionsFragment.onCreate()");
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        mUserScore = getActivity().getIntent().getIntExtra(EXTRA_USER_SCORE, 0);
+
+        mUserScore = getArguments().getInt(EXTRA_USER_SCORE);
         mComputerScore = getActivity().getIntent().getIntExtra(EXTRA_COMPUTER_SCORE, 0);
         mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
         mGameOnHard = getActivity().getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
@@ -60,6 +81,7 @@ public class OptionsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("icecream", "OptionsFragment.onCreateView()");
         super.onCreate(savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_options, container, false);
@@ -87,7 +109,7 @@ public class OptionsFragment extends Fragment {
         mSetGuessesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setNumGuessesResult(Integer.parseInt(mSetGuessesButton.getText().toString()));
+                // TODO
             }
         });
 
@@ -95,7 +117,7 @@ public class OptionsFragment extends Fragment {
         mHardCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                setGameHardResult(mHardCheckbox.isChecked());
+                mGameOnHard = mHardCheckbox.isChecked();
             }
         });
 
@@ -106,43 +128,20 @@ public class OptionsFragment extends Fragment {
         mClearScoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setZeroScoreResult();
+                // FIXME
+                mUserScore = 5;
+                mComputerScore = 0;
+                setReturnResult();
             }
         });
 
         return view;
     }
 
-    private void setNumGuessesResult(int numGuesses) {
-        data.putExtra(EXTRA_NUM_GUESSES, numGuesses);
-        getActivity().setResult(RESULT_OK, data);
-    }
-
-    private void setGameHardResult(boolean isHard) {
-        data.putExtra(EXTRA_GAME_ON_HARD, isHard);
-        getActivity().setResult(RESULT_OK, data);
-    }
-
-    private void setZeroScoreResult() {
-        data.putExtra(EXTRA_USER_SCORE, 0);
-        data.putExtra(EXTRA_COMPUTER_SCORE, 0);
-        getActivity().setResult(RESULT_OK, data);
-    }
-
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onPause() {
+        setReturnResult();
+        super.onPause();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // outState.putBoolean(value);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        // mCallbacks = null;
-    }
 }

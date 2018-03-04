@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 /**
  * Created by Tori on 3/3/2018.
@@ -23,12 +24,18 @@ public class OptionsActivity extends AppCompatActivity {
     private int mNumGuesses;
     private boolean mGameOnHard;
 
-    protected OptionsFragment createFragment() {
-        return new OptionsFragment();
+    //@Override
+    protected Fragment createFragment() {
+        int userScore = getIntent().getIntExtra(EXTRA_USER_SCORE, 0);
+        int computerScore = getIntent().getIntExtra(EXTRA_COMPUTER_SCORE, 0);
+        int numGuesses = getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
+        boolean gameOnHard = getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
+        return OptionsFragment.newInstance(userScore, computerScore, numGuesses, gameOnHard);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("icecream", "OptionsActivity.onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
         FragmentManager fm = getSupportFragmentManager();
@@ -43,8 +50,9 @@ public class OptionsActivity extends AppCompatActivity {
 
         mNumGuesses = getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
         mGameOnHard = getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
-
     }
+
+
 
     public static Intent newIntent(Context packageContext, int userScore, int computerScore, int numGuesses, boolean isOnHard) {
         Intent intent = new Intent(packageContext, OptionsActivity.class);
