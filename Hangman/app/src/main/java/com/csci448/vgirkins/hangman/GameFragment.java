@@ -40,7 +40,7 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.activity_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_game, container, false);
 
         mScoreDisplay = view.findViewById(R.id.score_display_field);
         mGuessesLeft = view.findViewById(R.id.guesses_left_field);

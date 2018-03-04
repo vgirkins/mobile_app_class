@@ -41,8 +41,8 @@ public class WelcomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO start the game activity
-                /*Intent intent = GameActivity.newIntent(getActivity());
-                startActivityForResult(intent, REQUEST_CODE_SCORE);*/
+                Intent intent = GameActivity.newIntent(getActivity());
+                startActivityForResult(intent, REQUEST_CODE_SCORE);
             }
         });
 
@@ -51,6 +51,8 @@ public class WelcomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO start the options activity
+                Intent intent = OptionsActivity.newIntent(getActivity());
+                startActivityForResult(intent, REQUEST_CODE_SCORE);
             }
         });
 

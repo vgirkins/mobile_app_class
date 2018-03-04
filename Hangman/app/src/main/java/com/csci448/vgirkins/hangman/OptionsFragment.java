@@ -39,7 +39,7 @@ public class OptionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.activity_options, container, false);
+        View view = inflater.inflate(R.layout.fragment_options, container, false);
 
         mNumGuessesField = view.findViewById(R.id.num_guesses_field);
         mNumGuessesField.addTextChangedListener(new TextWatcher() {
