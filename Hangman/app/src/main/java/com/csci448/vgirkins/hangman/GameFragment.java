@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Tori on 3/3/2018.
@@ -39,7 +42,12 @@ public class GameFragment extends Fragment {
     private Button mBackButton;
     private Button mNewGameButton;
 
+    private String hardWordsFile = "hard.txt";
+    private String easyWordsFile = "easy.txt";
+    private int numWords = 500;
+
     public static GameFragment newInstance(int userScore, int computerScore, int numGuesses, boolean gameOnHard) {
+        Log.d("icecream", "New instance");
         Bundle args = new Bundle();
         args.putInt(EXTRA_USER_SCORE, userScore);
         args.putInt(EXTRA_COMPUTER_SCORE, computerScore);
@@ -54,10 +62,9 @@ public class GameFragment extends Fragment {
     public void setReturnResult() {
         Intent resultIntent = new Intent();
 
+        // The only two values which may get changed in this activity
         resultIntent.putExtra(EXTRA_USER_SCORE, mUserScore);
         resultIntent.putExtra(EXTRA_COMPUTER_SCORE, mComputerScore);
-        resultIntent.putExtra(EXTRA_NUM_GUESSES, mNumGuesses);
-        resultIntent.putExtra(EXTRA_GAME_ON_HARD, mGameOnHard);
 
         getActivity().setResult(Activity.RESULT_OK, resultIntent);
     }
@@ -66,12 +73,14 @@ public class GameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Load in extras
         mUserScore = getArguments().getInt(EXTRA_USER_SCORE);
         mComputerScore = getActivity().getIntent().getIntExtra(EXTRA_COMPUTER_SCORE, 0);
         mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
         mGameOnHard = getActivity().getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
 
         // FIXME actually load in words
+        // Create a game
         if (mGameOnHard) {
             game = new HangmanGame("antidisestablishmentarianism", mNumGuesses);
         }
@@ -90,7 +99,7 @@ public class GameFragment extends Fragment {
         mScoreDisplay.setText(String.format(getString(R.string.score), mUserScore, mComputerScore));
 
         mGuessesLeft = view.findViewById(R.id.guesses_left_field);
-        mGuessesLeft.setText(String.format("%1$d", mNumGuesses));
+        mGuessesLeft.setText(String.format(getString(R.string.guesses_left), mNumGuesses));
 
         mDisplayWord = view.findViewById(R.id.display_word_field);
         mDisplayWord.setText(game.getWordToDisplay());
@@ -101,15 +110,30 @@ public class GameFragment extends Fragment {
         mSubmitGuessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Handle a user guess
                 String guess = mEnterGuess.getText().toString();
                 boolean userWon = game.checkGuess(guess);
+                mNumGuesses = game.getNumGuessesLeft();
                 if (userWon) {
                     mUserScore++;
+                    setReturnResult();
+                    String toastText = "Great job! You won.";
+                    makeToast(toastText);
                 }
+                else {
+                    if (game.isGameOver()) {
+                        mComputerScore++;
+                        setReturnResult();
+                        String toastText = "Sorry, I won this time.";
+                        makeToast(toastText);
+                    }
+                }
+                updateUI();
             }
         });
 
         mBackButton = view.findViewById(R.id.back_button);
+        mBackButton.setVisibility(View.INVISIBLE);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,13 +143,55 @@ public class GameFragment extends Fragment {
         });
 
         mNewGameButton = view.findViewById(R.id.new_game_button);
+        mNewGameButton.setVisibility(View.INVISIBLE);
         mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: start a new game (duh)
+                // FIXME actually load in words
+                // Create a new game
+                if (mGameOnHard) {
+                    game = new HangmanGame("antidisestablishmentarianism", mNumGuesses);
+                }
+                else {
+                    game = new HangmanGame("create", mNumGuesses);
+                }
+
+                // Re-enable everything
+                mGuessesLeft.setVisibility(View.VISIBLE);
+                mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
+                mEnterGuess.setEnabled(true);
+                mSubmitGuessButton.setEnabled(true);
+                mBackButton.setVisibility(View.INVISIBLE);
+                mNewGameButton.setVisibility(View.INVISIBLE);
+                updateUI();
             }
         });
 
         return view;
+    }
+
+    private void updateUI() {
+        if (game.isGameOver()) {
+            // Disable everything
+            mGuessesLeft.setVisibility(View.INVISIBLE);
+            mEnterGuess.setEnabled(false);
+            mSubmitGuessButton.setEnabled(false);
+            mBackButton.setVisibility(View.VISIBLE);
+            mNewGameButton.setVisibility(View.VISIBLE);
+        }
+
+        // Update fields with new data
+        mScoreDisplay.setText(String.format(getString(R.string.score), mUserScore, mComputerScore));
+        mGuessesLeft.setText(String.format(getString(R.string.guesses_left), mNumGuesses));
+        mDisplayWord.setText(game.getWordToDisplay());
+        mEnterGuess.setText("");
+    }
+
+    private void makeToast(String text) {
+        Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT );
+        toast.setGravity(Gravity.TOP, 0, 0);
+        View toastView = toast.getView();
+        toastView.setBackgroundResource(R.drawable.background_toast);
+        toast.show();
     }
 }

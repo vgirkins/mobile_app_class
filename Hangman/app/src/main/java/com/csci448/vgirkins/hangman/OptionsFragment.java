@@ -111,6 +111,7 @@ public class OptionsFragment extends Fragment {
             public void onClick(View view) {
                 mUserScore = 0;
                 mComputerScore = 0;
+                mScoreDisplay.setText(String.format(getString(R.string.score), mUserScore, mComputerScore));
                 setReturnResult();
             }
         });

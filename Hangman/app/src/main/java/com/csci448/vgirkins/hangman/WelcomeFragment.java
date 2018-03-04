@@ -94,7 +94,8 @@ public class WelcomeFragment extends Fragment {
         }
 
         else if (requestCode == REQUEST_CODE_GAME) {
-
+            mUserScore = GameActivity.getUserScore(data);
+            mComputerScore = GameActivity.getComputerScore(data);
         }
     }
 }

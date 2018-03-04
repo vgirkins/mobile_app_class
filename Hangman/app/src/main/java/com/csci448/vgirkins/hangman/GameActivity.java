@@ -54,4 +54,11 @@ public class GameActivity extends AppCompatActivity {
         }
 
     }
+
+    public static int getUserScore(Intent result) {
+        return result.getIntExtra(EXTRA_USER_SCORE, 0);
+    }
+    public static int getComputerScore(Intent result) {
+        return result.getIntExtra(EXTRA_COMPUTER_SCORE, 0);
+    }
 }

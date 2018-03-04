@@ -1,5 +1,7 @@
 package com.csci448.vgirkins.hangman;
 
+import android.util.Log;
+
 /**
  * Created by Tori on 3/3/2018.
  */
@@ -14,6 +16,10 @@ public class HangmanGame {
 
     public boolean isGameOver() {
         return gameIsOver;
+    }
+
+    public int getNumGuessesLeft() {
+        return guessesLeft;
     }
 
     public HangmanGame(String word, int numGuesses) {
@@ -42,16 +48,12 @@ public class HangmanGame {
     public boolean checkGuess(String guess) {
         if (guess.length() > 1) {
             guessesLeft--;
-            if (guess == word) {
+            if (guess.equals(word)) {
                 userWord = word;
             }
         }
         else {
-            if (guessedLetters.contains(guess)) {
-                // User already guessed this letter
-                // TODO
-            }
-            else {
+            if (!guessedLetters.contains(guess)) {  // User hasn't guessed this already
                 char guessChar = guess.charAt(0);   // We already know it's only a single character
                 guessedLetters += guess;
                 if (word.contains(guess)) {
@@ -65,6 +67,7 @@ public class HangmanGame {
                                 newUserWord += userWord.charAt(i);
                             }
                         }
+                        userWord = newUserWord;
                     }
                 }
                 else {
@@ -73,11 +76,12 @@ public class HangmanGame {
             }
         }
 
-        if (userWord == word) {
+        if (userWord.equals(word)) {
             gameIsOver = true;
             return true;
         }
         else if (guessesLeft == 0) {
+            userWord = word;
             gameIsOver = true;
             return false;
         }
