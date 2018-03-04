@@ -1,12 +1,9 @@
 package com.csci448.vgirkins.hangman;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,8 +14,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
  * Created by Tori on 3/3/2018.
+ * Citations:   https://randomwordgenerator.com/
+ *              https://stackoverflow.com/questions/2788080/java-how-to-read-a-text-file
  */
 
 public class GameFragment extends Fragment {
@@ -42,12 +48,11 @@ public class GameFragment extends Fragment {
     private Button mBackButton;
     private Button mNewGameButton;
 
-    private String hardWordsFile = "hard.txt";
-    private String easyWordsFile = "easy.txt";
-    private int numWords = 500;
+    private String mHardWordsFile = "hard.txt";
+    private String mEasyWordsFile = "easy.txt";
+    private int mNumWords = 500;
 
     public static GameFragment newInstance(int userScore, int computerScore, int numGuesses, boolean gameOnHard) {
-        Log.d("icecream", "New instance");
         Bundle args = new Bundle();
         args.putInt(EXTRA_USER_SCORE, userScore);
         args.putInt(EXTRA_COMPUTER_SCORE, computerScore);
@@ -79,14 +84,31 @@ public class GameFragment extends Fragment {
         mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
         mGameOnHard = getActivity().getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
 
-        // FIXME actually load in words
-        // Create a game
-        if (mGameOnHard) {
-            game = new HangmanGame("antidisestablishmentarianism", mNumGuesses);
+        String fileName = mGameOnHard ? mHardWordsFile : mEasyWordsFile;
+        String word;
+        // Read file
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            StringBuilder sb = new StringBuilder();
+            word = br.readLine();
+            int targetIndex = (int)Math.random() * mNumWords;
+            int i = 0;
+            while (word != null && i < targetIndex) {
+                word = br.readLine();
+                i++;
+            }
+            br.close();
+        } catch (Exception e) {
+            Log.d("icecream", e.getMessage());
+            e.printStackTrace();
+            return;
         }
-        else {
-            game = new HangmanGame("create", mNumGuesses);
-        }
+
+
+        // Remove space from word because I'm too lazy to write a script to remove spaces from file
+        word = word.replace(" ", "");
+        Log.d("icecream", word);
     }
 
     @Override
