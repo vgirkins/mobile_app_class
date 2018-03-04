@@ -4,13 +4,11 @@
 package com.csci448.vgirkins.hangman;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import static android.app.Activity.RESULT_OK;
+// TODO IF SOMETHING STOPS WORKING YOU MAY NEED TO IMPORT ACTIVITY.RESULT_OK
 
 /**
  * Created by Tori on 3/2/2018.
@@ -45,7 +42,6 @@ public class OptionsFragment extends Fragment {
 
 
     public static OptionsFragment newInstance(int userScore, int computerScore, int numGuesses, boolean gameOnHard) {
-        Log.d("icecream", "OptionsFragment.newInstance()");
         Bundle args = new Bundle();
         args.putInt(EXTRA_USER_SCORE, userScore);
         args.putInt(EXTRA_COMPUTER_SCORE, computerScore);
@@ -70,7 +66,6 @@ public class OptionsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("icecream", "OptionsFragment.onCreate()");
         super.onCreate(savedInstanceState);
 
         mUserScore = getArguments().getInt(EXTRA_USER_SCORE);
@@ -81,43 +76,29 @@ public class OptionsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("icecream", "OptionsFragment.onCreateView()");
         super.onCreate(savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_options, container, false);
 
         mNumGuessesField = view.findViewById(R.id.num_guesses_field);
         mNumGuessesField.setText(String.format(getString(R.string.num_guesses_hint), mNumGuesses));
-        mNumGuessesField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // TODO
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // TODO
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                // TODO
-            }
-        });
 
         mSetGuessesButton = view.findViewById(R.id.set_guesses_button);
         mSetGuessesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                mNumGuesses = Integer.parseInt(mNumGuessesField.getText().toString());
+                setReturnResult();
             }
         });
 
         mHardCheckbox = view.findViewById(R.id.hard_checkbox);
+        mHardCheckbox.setChecked(mGameOnHard);
         mHardCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mGameOnHard = mHardCheckbox.isChecked();
+                setReturnResult();
             }
         });
 
@@ -128,8 +109,7 @@ public class OptionsFragment extends Fragment {
         mClearScoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // FIXME
-                mUserScore = 5;
+                mUserScore = 0;
                 mComputerScore = 0;
                 setReturnResult();
             }
@@ -137,11 +117,4 @@ public class OptionsFragment extends Fragment {
 
         return view;
     }
-
-    @Override
-    public void onPause() {
-        setReturnResult();
-        super.onPause();
-    }
-
 }

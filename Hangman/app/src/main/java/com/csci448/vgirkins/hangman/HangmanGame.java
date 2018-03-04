@@ -12,14 +12,18 @@ public class HangmanGame {
     private String guessedLetters;
     private boolean gameIsOver;
 
-    public HangmanGame(String word) {
+    public boolean isGameOver() {
+        return gameIsOver;
+    }
+
+    public HangmanGame(String word, int numGuesses) {
         this.word = word;
         length = word.length();
         userWord = "";
         for (int i = 0; i < length; i++) {
             userWord += "_";
         }
-        guessesLeft = 10;
+        guessesLeft = numGuesses;
         guessedLetters = "";
         gameIsOver = false;
     }
@@ -33,7 +37,8 @@ public class HangmanGame {
         return printThis;
     }
 
-    // Value of return indicates whether user has just won
+    // Value of return indicates whether user has just won. False doesn't necessarily mean they lost.
+    // Just means they did not win with this particular guess.
     public boolean checkGuess(String guess) {
         if (guess.length() > 1) {
             guessesLeft--;

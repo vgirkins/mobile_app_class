@@ -24,7 +24,6 @@ public class OptionsActivity extends AppCompatActivity {
     private int mNumGuesses;
     private boolean mGameOnHard;
 
-    //@Override
     protected Fragment createFragment() {
         int userScore = getIntent().getIntExtra(EXTRA_USER_SCORE, 0);
         int computerScore = getIntent().getIntExtra(EXTRA_COMPUTER_SCORE, 0);
@@ -35,7 +34,6 @@ public class OptionsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("icecream", "OptionsActivity.onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
         FragmentManager fm = getSupportFragmentManager();

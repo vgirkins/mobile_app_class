@@ -54,8 +54,7 @@ public class WelcomeFragment extends Fragment {
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = GameActivity.newIntent(getActivity());
-                // TODO put extras
+                Intent intent = GameActivity.newIntent(getActivity(), mUserScore, mComputerScore, mNumGuesses, mGameOnHard);
                 startActivityForResult(intent, REQUEST_CODE_GAME);
             }
         });
