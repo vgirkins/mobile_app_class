@@ -4,10 +4,12 @@
 package com.csci448.vgirkins.hangman;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Tori on 3/2/2018.
@@ -32,6 +36,7 @@ public class OptionsFragment extends Fragment {
     private CheckBox mHardCheckbox;
     private TextView mScoreDisplay;
     private Button mClearScoreButton;
+    private Intent data;
 
     private int mUserScore;
     private  int mComputerScore;
@@ -79,19 +84,18 @@ public class OptionsFragment extends Fragment {
         });
 
         mSetGuessesButton = view.findViewById(R.id.set_guesses_button);
+        mSetGuessesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNumGuessesResult(Integer.parseInt(mSetGuessesButton.getText().toString()));
+            }
+        });
 
         mHardCheckbox = view.findViewById(R.id.hard_checkbox);
         mHardCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                // TODO
-            }
-        });
-
-        mSetGuessesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO
+                setGameHardResult(mHardCheckbox.isChecked());
             }
         });
 
@@ -102,11 +106,27 @@ public class OptionsFragment extends Fragment {
         mClearScoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                setZeroScoreResult();
             }
         });
 
         return view;
+    }
+
+    private void setNumGuessesResult(int numGuesses) {
+        data.putExtra(EXTRA_NUM_GUESSES, numGuesses);
+        getActivity().setResult(RESULT_OK, data);
+    }
+
+    private void setGameHardResult(boolean isHard) {
+        data.putExtra(EXTRA_GAME_ON_HARD, isHard);
+        getActivity().setResult(RESULT_OK, data);
+    }
+
+    private void setZeroScoreResult() {
+        data.putExtra(EXTRA_USER_SCORE, 0);
+        data.putExtra(EXTRA_COMPUTER_SCORE, 0);
+        getActivity().setResult(RESULT_OK, data);
     }
 
     @Override

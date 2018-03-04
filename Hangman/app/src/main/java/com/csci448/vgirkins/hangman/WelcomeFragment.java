@@ -7,6 +7,7 @@ package com.csci448.vgirkins.hangman;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -79,10 +80,6 @@ public class WelcomeFragment extends Fragment {
         return view;
     }
 
-    private void updateUI() {
-
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -91,6 +88,10 @@ public class WelcomeFragment extends Fragment {
         }
 
         if (requestCode == REQUEST_CODE_OPTIONS) {
+            mUserScore = OptionsActivity.getUserScore(data);
+            mComputerScore = OptionsActivity.getComputerScore(data);
+            mNumGuesses = OptionsActivity.getNumGuesses(data);
+            mGameOnHard = OptionsActivity.isGameHard(data);
         }
 
         else if (requestCode == REQUEST_CODE_GAME) {

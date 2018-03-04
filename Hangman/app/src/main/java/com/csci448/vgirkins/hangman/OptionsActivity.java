@@ -54,4 +54,17 @@ public class OptionsActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_GAME_ON_HARD, isOnHard);
         return intent;
     }
+
+    public static int getUserScore(Intent result) {
+        return result.getIntExtra(EXTRA_USER_SCORE, 0);
+    }
+    public static int getComputerScore(Intent result) {
+        return result.getIntExtra(EXTRA_COMPUTER_SCORE, 0);
+    }
+    public static int getNumGuesses(Intent result) {
+        return  result.getIntExtra(EXTRA_NUM_GUESSES, 10);
+    }
+    public static boolean isGameHard(Intent result) {
+        return result.getBooleanExtra(EXTRA_GAME_ON_HARD, false);
+    }
 }
