@@ -4,10 +4,12 @@
 package com.csci448.vgirkins.hangman;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +17,16 @@ import android.widget.Button;
 
 public class WelcomeFragment extends Fragment {
 
-    private int userScore;
-    private int computerScore;
-    private int numGuesses;
-    private boolean gameOnHard;
+    private int mUserScore;
+    private int mComputerScore;
+    private int mNumGuesses;
+    private boolean mGameOnHard;
 
     private Button mPlayButton;
     private Button mOptionsButton;
     private Button mQuitButton;
-    private static final int REQUEST_CODE_SCORE = 0;
+    private static final int REQUEST_CODE_OPTIONS = 0;
+    private static final int REQUEST_CODE_GAME = 1;
 
     @Override
     public void onAttach(Context context) {
@@ -34,10 +37,10 @@ public class WelcomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        userScore = 0;
-        computerScore = 0;
-        numGuesses = 10;
-        gameOnHard = false;
+        mUserScore = 0;
+        mComputerScore = 0;
+        mNumGuesses = 10;
+        mGameOnHard = false;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class WelcomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = GameActivity.newIntent(getActivity());
                 // TODO put extras
-                startActivityForResult(intent, REQUEST_CODE_SCORE);
+                startActivityForResult(intent, REQUEST_CODE_GAME);
             }
         });
 
@@ -60,8 +63,8 @@ public class WelcomeFragment extends Fragment {
         mOptionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = OptionsActivity.newIntent(getActivity(), userScore, computerScore, numGuesses, gameOnHard);
-                startActivityForResult(intent, REQUEST_CODE_SCORE);
+                Intent intent = OptionsActivity.newIntent(getActivity(), mUserScore, mComputerScore, mNumGuesses, mGameOnHard);
+                startActivityForResult(intent, REQUEST_CODE_OPTIONS);
             }
         });
 
@@ -76,20 +79,22 @@ public class WelcomeFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    private void updateUI() {
+
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // outState.putBoolean(value);
-    }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        // mCallbacks = null;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE_OPTIONS) {
+        }
+
+        else if (requestCode == REQUEST_CODE_GAME) {
+
+        }
     }
 }

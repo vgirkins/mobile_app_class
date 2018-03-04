@@ -2,12 +2,12 @@
     <string name="app_name">Hangman</string>
     <string name="play_button_text">Play!</string>
     <string name="options_button_text">Options</string>
-    <string name="num_guesses_hint">Number of guesses</string>
+    <string name="num_guesses_hint">%1$d</string>
     <string name="set_guesses_button_text">Set guesses</string>
     <string name="quit_button_text">Quit</string>
     <string name="difficulty_label">Game on hard</string>
     <string name="clear_score_button_text">Clear score</string>
-    <string name="score">Score: %1$d</string>
+    <string name="score">Score: %1$d (user) to %2$d (computer)</string>
     <string name="guesses_left">Wrong guesses left: %1$d</string>
     <string name="guess_field_hint">Guess</string>
     <string name="submit_button_text">Submit guess</string>

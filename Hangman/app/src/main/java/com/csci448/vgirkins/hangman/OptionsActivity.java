@@ -18,6 +18,11 @@ public class OptionsActivity extends AppCompatActivity {
     private static final String EXTRA_NUM_GUESSES = "com.csci448.vgirkins.hangman.num_guesses";
     private static final String EXTRA_GAME_ON_HARD = "com.csci448.vgirkins.hangman.game_on_hard";
 
+    private int mUserScore;
+    private int mComputerScore;
+    private int mNumGuesses;
+    private boolean mGameOnHard;
+
     protected OptionsFragment createFragment() {
         return new OptionsFragment();
     }
@@ -35,6 +40,9 @@ public class OptionsActivity extends AppCompatActivity {
                     .add(R.id.fragment_container_options, fragment)
                     .commit();
         }
+
+        mNumGuesses = getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
+        mGameOnHard = getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
 
     }
 
