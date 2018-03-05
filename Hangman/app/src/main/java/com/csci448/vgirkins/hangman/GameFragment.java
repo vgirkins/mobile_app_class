@@ -19,12 +19,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 /**
  * Created by Tori on 3/3/2018.
  * Citations:   https://randomwordgenerator.com/
- *              https://stackoverflow.com/questions/2788080/java-how-to-read-a-text-file
+ *              https://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
  */
 
 public class GameFragment extends Fragment {
@@ -84,31 +85,8 @@ public class GameFragment extends Fragment {
         mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
         mGameOnHard = getActivity().getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
 
-        String fileName = mGameOnHard ? mHardWordsFile : mEasyWordsFile;
-        String word;
-        // Read file
+        game = new HangmanGame(pickWord(), mNumGuesses);
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
-            StringBuilder sb = new StringBuilder();
-            word = br.readLine();
-            int targetIndex = (int)Math.random() * mNumWords;
-            int i = 0;
-            while (word != null && i < targetIndex) {
-                word = br.readLine();
-                i++;
-            }
-            br.close();
-        } catch (Exception e) {
-            Log.d("icecream", e.getMessage());
-            e.printStackTrace();
-            return;
-        }
-
-
-        // Remove space from word because I'm too lazy to write a script to remove spaces from file
-        word = word.replace(" ", "");
-        Log.d("icecream", word);
     }
 
     @Override
@@ -160,7 +138,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setReturnResult();
-                // TODO: Go back (duh)
+                getActivity().onBackPressed();
             }
         });
 
@@ -169,14 +147,7 @@ public class GameFragment extends Fragment {
         mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // FIXME actually load in words
-                // Create a new game
-                if (mGameOnHard) {
-                    game = new HangmanGame("antidisestablishmentarianism", mNumGuesses);
-                }
-                else {
-                    game = new HangmanGame("create", mNumGuesses);
-                }
+                game = new HangmanGame(pickWord(), mNumGuesses);
 
                 // Re-enable everything
                 mGuessesLeft.setVisibility(View.VISIBLE);
@@ -215,5 +186,31 @@ public class GameFragment extends Fragment {
         View toastView = toast.getView();
         toastView.setBackgroundResource(R.drawable.background_toast);
         toast.show();
+    }
+
+    // Selects the appropriate file and pulls a random word from it
+    private String pickWord() {
+        String fileName = mGameOnHard ? mHardWordsFile : mEasyWordsFile;
+        String word = "";
+
+        // Read file
+        try {
+            InputStream inputStream = getContext().getAssets().open(fileName);
+            Scanner scanner = new Scanner(inputStream);
+            int targetIndex = (int)(Math.random() * mNumWords);
+            int i = 0;
+            word = scanner.nextLine();
+            while (scanner.hasNextLine() && i < targetIndex) {
+                word = scanner.nextLine();
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        // Remove space from word because I'm too lazy to write a script to remove spaces from file
+        word = word.replace(" ", "");
+        return word;
     }
 }

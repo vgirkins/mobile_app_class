@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 // TODO IF SOMETHING STOPS WORKING YOU MAY NEED TO IMPORT ACTIVITY.RESULT_OK
 
 /**
@@ -89,6 +91,8 @@ public class OptionsFragment extends Fragment {
             public void onClick(View view) {
                 mNumGuesses = Integer.parseInt(mNumGuessesField.getText().toString());
                 setReturnResult();
+                String text = "Number of guesses has been set to " + String.format("%1$d", mNumGuesses);
+                makeToast(text);
             }
         });
 
@@ -99,6 +103,8 @@ public class OptionsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mGameOnHard = mHardCheckbox.isChecked();
                 setReturnResult();
+                String text = "Game is now on " + (mGameOnHard ? "hard" : "easy");
+                makeToast(text);
             }
         });
 
@@ -113,9 +119,19 @@ public class OptionsFragment extends Fragment {
                 mComputerScore = 0;
                 mScoreDisplay.setText(String.format(getString(R.string.score), mUserScore, mComputerScore));
                 setReturnResult();
+                String text = "Score record was reset";
+                makeToast(text);
             }
         });
 
         return view;
+    }
+
+    private void makeToast(String text) {
+        Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT );
+        toast.setGravity(Gravity.TOP, 0, 0);
+        View toastView = toast.getView();
+        toastView.setBackgroundResource(R.drawable.background_toast);
+        toast.show();
     }
 }
