@@ -14,14 +14,6 @@ public class HangmanGame {
     private String guessedLetters;
     private boolean gameIsOver;
 
-    public boolean isGameOver() {
-        return gameIsOver;
-    }
-
-    public int getNumGuessesLeft() {
-        return guessesLeft;
-    }
-
     public HangmanGame(String word, int numGuesses) {
         this.word = word;
         length = word.length();
@@ -32,6 +24,30 @@ public class HangmanGame {
         guessesLeft = numGuesses;
         guessedLetters = "";
         gameIsOver = false;
+    }
+
+    // For recreating a game lost after rotation
+    public HangmanGame(String word, String userWord, int numGuesses, String guessedLetters) {
+        this.word = word;
+        length = word.length();
+        this.userWord = userWord;
+        this.guessesLeft = numGuesses;
+        this.guessedLetters = guessedLetters;
+        this.gameIsOver = false;
+    }
+
+    public String getWord() { return word; }
+
+    public String getGuessedLetters() { return guessedLetters; }
+
+    public String getUserWord() { return userWord; }
+
+    public boolean isGameOver() {
+        return gameIsOver;
+    }
+
+    public int getNumGuessesLeft() {
+        return guessesLeft;
     }
 
     public String getWordToDisplay() {

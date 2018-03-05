@@ -70,10 +70,20 @@ public class OptionsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mUserScore = getArguments().getInt(EXTRA_USER_SCORE);
-        mComputerScore = getActivity().getIntent().getIntExtra(EXTRA_COMPUTER_SCORE, 0);
-        mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
-        mGameOnHard = getActivity().getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
+        if (savedInstanceState != null) {
+            // Recover values
+            mUserScore = savedInstanceState.getInt(EXTRA_USER_SCORE, 0);
+            mComputerScore = savedInstanceState.getInt(EXTRA_COMPUTER_SCORE, 0);
+            mNumGuesses = savedInstanceState.getInt(EXTRA_NUM_GUESSES, 10);
+            mGameOnHard = savedInstanceState.getBoolean(EXTRA_GAME_ON_HARD, false);
+        }
+        else {
+            // Load in values from calling activity
+            mUserScore = getArguments().getInt(EXTRA_USER_SCORE);
+            mComputerScore = getActivity().getIntent().getIntExtra(EXTRA_COMPUTER_SCORE, 0);
+            mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
+            mGameOnHard = getActivity().getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
+        }
     }
 
     @Override
@@ -126,6 +136,17 @@ public class OptionsFragment extends Fragment {
 
         return view;
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(EXTRA_USER_SCORE, mUserScore);
+        savedInstanceState.putInt(EXTRA_COMPUTER_SCORE, mComputerScore);
+        savedInstanceState.putInt(EXTRA_NUM_GUESSES, mNumGuesses);
+        savedInstanceState.putBoolean(EXTRA_GAME_ON_HARD, mGameOnHard);
+    }
+
 
     private void makeToast(String text) {
         Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT );

@@ -18,6 +18,11 @@ import android.widget.Button;
 
 public class WelcomeFragment extends Fragment {
 
+    private static final String EXTRA_USER_SCORE = "com.csci448.vgirkins.hangman.user_score";
+    private static final String EXTRA_COMPUTER_SCORE = "com.csci448.vgirkins.hangman.computer_score";
+    private static final String EXTRA_NUM_GUESSES = "com.csci448.vgirkins.hangman.num_guesses";
+    private static final String EXTRA_GAME_ON_HARD = "com.csci448.vgirkins.hangman.game_on_hard";
+
     private int mUserScore;
     private int mComputerScore;
     private int mNumGuesses;
@@ -38,10 +43,12 @@ public class WelcomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        // Set values to defaults
         mUserScore = 0;
         mComputerScore = 0;
         mNumGuesses = 10;
         mGameOnHard = false;
+
     }
 
     @Override
@@ -98,4 +105,5 @@ public class WelcomeFragment extends Fragment {
             mComputerScore = GameActivity.getComputerScore(data);
         }
     }
+
 }

@@ -43,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container_game);
 
@@ -54,6 +55,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
     }
+
 
     public static int getUserScore(Intent result) {
         return result.getIntExtra(EXTRA_USER_SCORE, 0);

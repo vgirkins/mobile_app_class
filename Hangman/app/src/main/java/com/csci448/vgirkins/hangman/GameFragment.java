@@ -34,6 +34,11 @@ public class GameFragment extends Fragment {
     private static final String EXTRA_NUM_GUESSES = "com.csci448.vgirkins.hangman.num_guesses";
     private static final String EXTRA_GAME_ON_HARD = "com.csci448.vgirkins.hangman.game_on_hard";
 
+    // For recovering a HangmanGame
+    private static final String KEY_WORD = "com.csci448.vgirkins.hangman.word";
+    private static final String KEY_USER_WORD = "com.csci448.vgirkins.hangman.user_word";
+    private static final String KEY_GUESSED_LETTERS = "com.csci448.vgirkins.hangman.guessed_letters";
+
     private int mUserScore;
     private  int mComputerScore;
     private int mNumGuesses;
@@ -65,29 +70,48 @@ public class GameFragment extends Fragment {
         return frag;
     }
 
-    public void setReturnResult() {
-        Intent resultIntent = new Intent();
-
-        // The only two values which may get changed in this activity
-        resultIntent.putExtra(EXTRA_USER_SCORE, mUserScore);
-        resultIntent.putExtra(EXTRA_COMPUTER_SCORE, mComputerScore);
-
-        getActivity().setResult(Activity.RESULT_OK, resultIntent);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Load in extras
-        mUserScore = getArguments().getInt(EXTRA_USER_SCORE);
-        mComputerScore = getActivity().getIntent().getIntExtra(EXTRA_COMPUTER_SCORE, 0);
-        mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
-        mGameOnHard = getActivity().getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
+        if (savedInstanceState != null) {
+            // Recover values and recreate game
+            mUserScore = savedInstanceState.getInt(EXTRA_USER_SCORE, 0);
+            mComputerScore = savedInstanceState.getInt(EXTRA_COMPUTER_SCORE, 0);
+            mNumGuesses = savedInstanceState.getInt(EXTRA_NUM_GUESSES, 10);
+            mGameOnHard = savedInstanceState.getBoolean(EXTRA_GAME_ON_HARD, false);
+            String word = savedInstanceState.getString(KEY_WORD);
+            String userWord = savedInstanceState.getString(KEY_USER_WORD);
+            String guessedLetters = savedInstanceState.getString(KEY_GUESSED_LETTERS);
 
-        game = new HangmanGame(pickWord(), mNumGuesses);
+            game = new HangmanGame(word, userWord, mNumGuesses, guessedLetters);
+        }
+        else {
+            // Load in values from calling activity
+            mUserScore = getArguments().getInt(EXTRA_USER_SCORE);
+            mComputerScore = getActivity().getIntent().getIntExtra(EXTRA_COMPUTER_SCORE, 0);
+            mNumGuesses = getActivity().getIntent().getIntExtra(EXTRA_NUM_GUESSES, 10);
+            mGameOnHard = getActivity().getIntent().getBooleanExtra(EXTRA_GAME_ON_HARD, false);
+
+            game = new HangmanGame(pickWord(), mNumGuesses);
+        }
 
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(EXTRA_USER_SCORE, mUserScore);
+        savedInstanceState.putInt(EXTRA_COMPUTER_SCORE, mComputerScore);
+        savedInstanceState.putInt(EXTRA_NUM_GUESSES, mNumGuesses);
+        savedInstanceState.putBoolean(EXTRA_GAME_ON_HARD, mGameOnHard);
+
+        savedInstanceState.putString(KEY_WORD, game.getWord());
+        savedInstanceState.putString(KEY_USER_WORD, game.getUserWord());
+        savedInstanceState.putString(KEY_GUESSED_LETTERS, game.getGuessedLetters());
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -212,5 +236,16 @@ public class GameFragment extends Fragment {
         // Remove space from word because I'm too lazy to write a script to remove spaces from file
         word = word.replace(" ", "");
         return word;
+    }
+
+    // Update the result with changed values
+    public void setReturnResult() {
+        Intent resultIntent = new Intent();
+
+        // The only two values which may get changed in this activity
+        resultIntent.putExtra(EXTRA_USER_SCORE, mUserScore);
+        resultIntent.putExtra(EXTRA_COMPUTER_SCORE, mComputerScore);
+
+        getActivity().setResult(Activity.RESULT_OK, resultIntent);
     }
 }
