@@ -27,13 +27,13 @@ public class HangmanGame {
     }
 
     // For recreating a game lost after rotation
-    public HangmanGame(String word, String userWord, int numGuesses, String guessedLetters) {
+    public HangmanGame(String word, String userWord, int numGuesses, String guessedLetters, boolean gameIsOver) {
         this.word = word;
         length = word.length();
         this.userWord = userWord;
         this.guessesLeft = numGuesses;
         this.guessedLetters = guessedLetters;
-        this.gameIsOver = false;
+        this.gameIsOver = gameIsOver;
     }
 
     public String getWord() { return word; }

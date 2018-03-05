@@ -38,6 +38,7 @@ public class GameFragment extends Fragment {
     private static final String KEY_WORD = "com.csci448.vgirkins.hangman.word";
     private static final String KEY_USER_WORD = "com.csci448.vgirkins.hangman.user_word";
     private static final String KEY_GUESSED_LETTERS = "com.csci448.vgirkins.hangman.guessed_letters";
+    private static final String KEY_GAME_OVER = "com.csci448.vgirkins.hangman.game_over";
 
     private int mUserScore;
     private  int mComputerScore;
@@ -83,8 +84,9 @@ public class GameFragment extends Fragment {
             String word = savedInstanceState.getString(KEY_WORD);
             String userWord = savedInstanceState.getString(KEY_USER_WORD);
             String guessedLetters = savedInstanceState.getString(KEY_GUESSED_LETTERS);
+            boolean gameOver = savedInstanceState.getBoolean(KEY_GAME_OVER);
 
-            game = new HangmanGame(word, userWord, mNumGuesses, guessedLetters);
+            game = new HangmanGame(word, userWord, mNumGuesses, guessedLetters, gameOver);
         }
         else {
             // Load in values from calling activity
@@ -110,6 +112,7 @@ public class GameFragment extends Fragment {
         savedInstanceState.putString(KEY_WORD, game.getWord());
         savedInstanceState.putString(KEY_USER_WORD, game.getUserWord());
         savedInstanceState.putString(KEY_GUESSED_LETTERS, game.getGuessedLetters());
+        savedInstanceState.putBoolean(KEY_GAME_OVER, game.isGameOver());
     }
 
 
@@ -129,8 +132,10 @@ public class GameFragment extends Fragment {
         mDisplayWord.setText(game.getWordToDisplay());
 
         mEnterGuess = view.findViewById(R.id.enter_guess_field);
+        mEnterGuess.setEnabled(!game.isGameOver());
 
         mSubmitGuessButton = view.findViewById(R.id.submit_button);
+        mSubmitGuessButton.setEnabled(!game.isGameOver());
         mSubmitGuessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,7 +162,7 @@ public class GameFragment extends Fragment {
         });
 
         mBackButton = view.findViewById(R.id.back_button);
-        mBackButton.setVisibility(View.INVISIBLE);
+        mBackButton.setVisibility(game.isGameOver() ? View.VISIBLE : View.INVISIBLE);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,7 +172,7 @@ public class GameFragment extends Fragment {
         });
 
         mNewGameButton = view.findViewById(R.id.new_game_button);
-        mNewGameButton.setVisibility(View.INVISIBLE);
+        mNewGameButton.setVisibility(game.isGameOver() ? View.VISIBLE : View.INVISIBLE);
         mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
