@@ -1,0 +1,4 @@
+<resources>
+    <!-- The signing key -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false"> AIzaSyDo53IB7YA_BNBiBL98qA7UMprhaDhuCdw </string>
+</resources>
