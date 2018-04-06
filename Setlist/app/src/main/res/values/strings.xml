@@ -1,3 +1,57 @@
 <resources>
     <string name="app_name">Setlist</string>
+
+    <!-- home screen -->
+        <string name="hPerformButton"> Performances </string>
+        <string name="hSongsButton"> Song Library </string>
+        <string name="hCreateButton"> Create </string>
+        <string name="hCreateSongButton">Song</string>
+        <string name="hCreatePerformanceButton">Performance</string>
+
+    <!--create performance screen -->
+
+        <string name="cpPracticeRadio"> Practice </string>
+        <string name="cpPerformRadio"> Performance </string>
+
+        <string name="cpNameHint"> Name </string>
+        <string name="cpBandHint"> Band </string>
+        <string name="cpDateHint"> Date (MM/DD/YYYY) </string>
+        <string name="cpTimeHint"> Time (HH:MM) </string>
+        <string name="cpAMRadio"> AM </string>
+        <string name="cpPMRadio"> PM </string>
+        <string name="cpLocationHint"> Location </string>
+        <string name="cpDescriptionHint"> Description </string>
+        <string name="cpSetlistButton"> Setlist </string>
+        <string name="cpCreateButton"> Create </string>
+        <string name="cpCancelButton"> Cancel </string>
+
+    <!--create song screen -->
+        <string name="csTitleHint">Title</string>
+        <string name="csArtistHint">Artist</string>
+        <string name="csKeyHint">Key</string>
+        <string name="csMinor">Minor</string>
+        <string name="csChordsHint">Link to Chords</string>
+        <string name="csVideoHint">Link to Video</string>
+        <string name="csDescriptionHint">Description</string>
+        <string name="csCreateButton"> Create </string>
+        <string name="csCancelButton"> Cancel </string>
+
+        <string name="dsDeleteButton"> Delete </string>
+        <string name="dpDeleteButton"> Delete </string>
+
+        <string-array name="csKeys_array">
+            <item>A</item>
+            <item>B</item>
+            <item>C</item>
+            <item>D</item>
+            <item>E</item>
+            <item>F</item>
+            <item>G</item>
+        </string-array>
+    <string-array name="csIntervalArray">
+        <item> </item>
+        <item>#</item>
+        <item>♭</item>
+    </string-array>
+
 </resources>
